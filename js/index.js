@@ -1,37 +1,23 @@
+// conectamos nuestra API
+fetch("https://api.escuelajs.co/api/v1/users")
+    // convertimos nuestra data JSON
+    .then(response => response.json())
+    .then(data => {
+        let tablaBody = "";
 
-// conectamos nuestra api
-fetch ("https://api.escuelajs.co/api/v1/users")
-//convertimos nuestra data json
-.then (response => response.json())
-.then(data =>{
+         // Verifica la cantidad de registros devueltos por la API
+         console.log("Cantidad total de registros:", data.length);
 
+        // creamos un ciclo para extraer cada arreglo que viene en el dato
+        for (let usuario of data) {
+            // construccion de tabla
+            tablaBody += `<tr>
+                           <td>${usuario.name}</td>
+                           <td>${usuario.email}</td>
+                           <td>${usuario.password}</td>
+                           <td><img src="${usuario.avatar}" alt="Avatar" style="width: 256px; height: 256px;"></td>
+                         </tr>`;
+        }
 
-    
-    let fila =""
-
-     // Encabezado de la tabla
-     fila += `<tr>
-     <th>Usuario</th>
-     <th>Email</th>
-     <th>Password</th>
-     <th>Avatar</th>
-   </tr>`;
-
-    // creamos un ciclio para extraer cada arrglo que viene en el dato
-    for (let usuario of data){
-
-
-        // construccion de tabla
-
-        fila += `<tr><td> ${usuario.name}</td>
-                 <td> ${usuario.email}</td>
-                 <td> ${usuario.password}</td>
-                 <td><img src="${usuario.avatar}"  alt="Avatar" style="width: 100px; height: 100px;"></td>`
-
-
-    }
-
-    document.getElementById("tabla").innerHTML = fila
-
-
-})
+        document.getElementById("tablaBody").innerHTML = tablaBody;
+    });
